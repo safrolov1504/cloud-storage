@@ -41,6 +41,8 @@ public class Controller implements Initializable {
             this.messageService = new MyServerClient(this);
             //this.getMessage = new GetMessage(this.messageService,this);
             this.sendMessage = new SendMessage(this.messageService);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

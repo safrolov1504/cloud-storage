@@ -5,9 +5,7 @@ import communication.GetMessage;
 import communication.SendMessage;
 import workWithSQL.SQLServer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 
@@ -36,23 +34,59 @@ public class ClientHandler {
         getMessage();
     }
 
+    public DataInputStream getIn() {
+        return in;
+    }
+
     public void getMessage(){
         new Thread(new Runnable() {
             public void run() {
                 try {
                     while (true) {
                         String clientMessage = in.readUTF();
+                        //Message message = Message.fromJson(clientMessage);
                         //ниже тест!!!!
+                        System.out.println("Вне цикла "+clientMessage);
                         getMessage.workWithInformation(clientMessage);
-                        //System.out.println(clientMessage);
+
+
+                       //recieveFile("test.txt");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch (SQLException e) {
+                }
+                catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
+
+    private void recieveFile(String filename) {
+        try {
+            long s;
+            s = Long.parseLong(in.readUTF());
+            System.out.println(s);
+            System.out.println("File size: " + s);
+            byte[] byteArray = new byte[1024];
+
+            new File("Recieved").mkdir();
+            File f = new File("./Recieved/" + filename);
+            f.createNewFile();
+
+            FileOutputStream fos = new FileOutputStream(f);
+            int sp = (int)(s / 1024);
+            if (s % 1024 != 0) sp++;
+            BufferedInputStream bis = new BufferedInputStream(in);
+            while (s > 0) {
+                int i = bis.read(byteArray);
+                fos.write(byteArray, 0, i);
+                s-= i;
+            }
+            fos.close();
+        } catch (IOException e) {
+            System.err.println("Recieve IO Error");
+        }
     }
 
     public void sendMessage(String message)  {

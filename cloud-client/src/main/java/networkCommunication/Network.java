@@ -16,6 +16,10 @@ public class Network {
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
 
+    public DataOutputStream getOutputStream() {
+        return outputStream;
+    }
+
     public Network(String serverAddress, int port, MyServerClient myServerDoctor) {
         this.serverAddress = serverAddress;
         this.port = port;
@@ -68,4 +72,11 @@ public class Network {
     }
 
 
+    public void sendMessage(int length) {
+        try {
+            outputStream.writeUTF(String.valueOf(length));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
