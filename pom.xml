@@ -16,7 +16,7 @@
 
 
     <properties>
-        <maven.complier.source>1.8</maven.complier.source>
-        <maven.complier.target>1.8</maven.complier.target>
+        <maven.complier.source>13</maven.complier.source>
+        <maven.complier.target>13</maven.complier.target>
     </properties>
 </project>
