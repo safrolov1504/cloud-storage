@@ -92,8 +92,8 @@ public class MyServerClient implements IService{
     }
 
     private void sendFile() {
-        //File file = new File("cloud-client/test.txt");
-        File file = new File("cloud-client/unnamed.jpg");
+        File file = new File("cloud-client/test.txt");
+        //File file = new File("cloud-client/unnamed.jpg");
 
         System.out.println("send file: " + file.getName());
 
